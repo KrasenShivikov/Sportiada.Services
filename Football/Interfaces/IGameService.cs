@@ -7,10 +7,18 @@
     {
         IEnumerable<GameModel> LastTwentyGames();
 
-        GameViewModel ById(int id);
+        GameFinalModel ById(int id);
 
-        IEnumerable<GameModel> BySeasonIdByCompetition(int seasonId, int competitionId);
+        IEnumerable<GameWithStatisticModel> GamesBySquadBySeason(int squadId, int seasonId);
 
-        IEnumerable<GameModel> ByRound(int RoundId);
+        IEnumerable<GameModel> ByTournament(int page, int pageSize, int tournamentId);
+
+        int CountByTournament(int tournamentId);
+
+        IEnumerable<GameModel> ByRound(int roundId);
+
+        IEnumerable<GameModel> ByRounds(IEnumerable<int> roundIds);
+
+
     }
 }

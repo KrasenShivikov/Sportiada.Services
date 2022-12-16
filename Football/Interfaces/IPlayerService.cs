@@ -1,11 +1,14 @@
 ﻿namespace Sportiada.Services.Football.Interfaces
 {
     using Models.Player;
+    using System.Collections.Generic;
 
     public interface IPlayerService
     {
         PlayerProfileModel ProfileById(int id);
 
-        PlayerSeasonStatisticModel PlayerSeasonStatistic(int id, int seasonId);
+        IEnumerable<PlayerProfileModel> PlayersBySquad(int squadId);
+
+        //PlayerSeasonStatisticModel PlayerSeasonStatistic(int id, int seasonId);
     }
 }
