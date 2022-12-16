@@ -5,12 +5,12 @@
     using Models.Game;
     using Models.Goal;
     using Models.GoalAssistance;
-    using Models.Side;
+    using Models.Squad;
     using System.Collections.Generic;
 
     public class TeamSeasonStatisticModel
     {
-        public SideGameListModel Side { get; set; }
+        public SquadGameListModel Side { get; set; }
 
         public List<GoalTeamSeasonStatisticModel> Goals { get; set; }
 
