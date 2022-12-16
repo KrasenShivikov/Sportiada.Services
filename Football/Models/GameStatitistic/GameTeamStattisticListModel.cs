@@ -1,9 +1,9 @@
 ﻿namespace Sportiada.Services.Football.Models.GameStatitistic
 {
-    using Models.Side;
+    using Models.Squad;
 
     public class GameTeamStattisticListModel : GameTeamStatisticModel
     {
-        public SideGameListModel Side { get; set; }
+        public SquadGameListModel Squad { get; set; }
     }
 }

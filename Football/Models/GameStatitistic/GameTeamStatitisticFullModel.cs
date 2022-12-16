@@ -4,14 +4,14 @@
     using Models.Goal;
     using Models.LineUp;
     using Models.Reserve;
-    using Models.Side;
+    using Models.Squad;
     using Models.Sideline;
     using Models.Substitute;
     using System.Collections.Generic;
 
     public class GameTeamStatitisticFullModel : GameTeamStatisticModel
     {
-        public SideGameModel Side { get; set; }
+        public SquadGameModel Squad { get; set; }
 
         public List<LineUpModel> LineUps { get; set; }
 
