@@ -18,6 +18,12 @@
 
         public string Season { get; set; }
 
+        public int SeasonId { get; set; }
+
         public string Tournament { get; set; }
+
+        public int TournamentId { get; set; }
+
+        public string Round { get; set; }
     }
 }
