@@ -4,6 +4,6 @@
     {
         public string Minute { get; set; }
 
-        public string InIcon { get; set; }
+        public string Icon { get; set; }
     }
 }
