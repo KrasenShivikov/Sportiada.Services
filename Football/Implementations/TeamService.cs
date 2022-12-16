@@ -10,7 +10,7 @@
     using Models.CardType;
     using Models.Player;
     using Models.Season;
-    using Models.Side;
+    using Models.Squad;
     using Models.Team;
     using Sportiada.Data;
     using System.Linq;
@@ -29,10 +29,10 @@
 
             var teamSeasonStat = new TeamSeasonStatisticModel
             {
-                Side = this.db.FootballSides.Where(s => s.SeasonId == seasonId && s.TeamId == teamId).Select(s => new SideGameListModel
+                Side = this.db.FootballSquads.Where(s => s.SeasonId == seasonId && s.TeamId == teamId).Select(s => new SquadGameListModel
                 {
                     Id = s.Id,
-                    Name = s.Name,
+                    Name = $"{s.Team.Name} - {s.Season.Name}",
                     Season = new SeasonModel
                     {
                         Id = seasonId,
@@ -43,15 +43,15 @@
                         Id = s.TeamId,
                         Name = s.Team.Name
                     }
-                }).First(),
-                Cards = this.db.FootballCards.Where(c => c.GameStatistic.Game.Round.Competition.SeasonId == seasonId && c.GameStatistic.Side.TeamId == teamId)
+                }).FirstOrDefault(),
+                Cards = this.db.FootballCards.Where(c => c.GameStatistic.Game.Round.Competition.SeasonId == seasonId && c.GameStatistic.Squad.TeamId == teamId)
                 .Select(c => new CardTeamSeasonStatisticModel
                 {
                     Id = c.Id,
                     Player = new PlayerTeamSeasonStatisticModel
                     {
                         Id = c.PlayerId,
-                        Name = c.Player.Name
+                        Name = c.Player.ProfileName
                     },
                     Type = new CardTypeModel
                     {
@@ -60,28 +60,28 @@
                         Picture = c.Type.Picture
                     }
                 }).ToList(),
-                Goals = this.db.FootballGoals.Where(g => g.GameStatistic.Game.Round.Competition.SeasonId == seasonId && g.GameStatistic.Side.TeamId == teamId)
+                Goals = this.db.FootballGoals.Where(g => g.GameStatistic.Game.Round.Competition.SeasonId == seasonId && g.GameStatistic.Squad.TeamId == teamId)
                 .Select(g => new GoalTeamSeasonStatisticModel
                 {
                     Id = g.Id,
                     Scorer = new PlayerTeamSeasonStatisticModel
                     {
                         Id = g.PlayerId,
-                        Name = g.Player.Name
+                        Name = g.Player.ProfileName
                     }
                 }).ToList(),
                 GoalAssistances = this.db.FootballGoalAssistances.Where(ga => ga.Goal.GameStatistic.Game.Round.Competition.SeasonId == seasonId
-                && ga.Goal.GameStatistic.Side.TeamId == teamId && ga.Player.Name != "Неизвестен")
+                && ga.Goal.GameStatistic.Squad.TeamId == teamId && ga.Player.ProfileName != "Неизвестен")
                 .Select(ga => new GoalAssistanceTeamSeasonStatisticModel
                 {
                     Id = ga.Id,
                     GoalAssistant = new PlayerTeamSeasonStatisticModel
                     {
                         Id = ga.PlayerId,
-                        Name = ga.Player.Name
+                        Name = ga.Player.ProfileName
                     }
                 }).ToList(),
-                Games = this.db.FootballGameStatistics.Where(gs => gs.Game.Round.Competition.SeasonId == seasonId && gs.Side.TeamId == teamId)
+                Games = this.db.FootballGameStatistics.Where(gs => gs.Game.Round.Competition.SeasonId == seasonId && gs.Squad.TeamId == teamId)
                 .Select(gs => new GameModel
                 {
                     Date = gs.Game.Date,
@@ -90,10 +90,10 @@
                     Statistics = gs.Game.GameStatistics.Select(g => new GameTeamStattisticListModel
                     {
                         Id = gs.Id,
-                        Side = new SideGameListModel
+                        Squad = new SquadGameListModel
                         {
-                            Id = gs.SideId,
-                            Name = gs.Side.Name,
+                            Id = gs.SquadId,
+                            Name = $"{gs.Squad.Team.Name} - {gs.Squad.Season.Name}",
                             Season = new SeasonModel
                             {
                                 Id = gs.Game.Round.Competition.Season.Id,
@@ -101,8 +101,8 @@
                             },
                             Team = new TeamModel
                             {
-                                Id = gs.Side.TeamId,
-                                Name = gs.Side.Team.Name
+                                Id = gs.Squad.TeamId,
+                                Name = gs.Squad.Team.Name
                             },
                         },
                         Type = new GameStatisticTypeModel
