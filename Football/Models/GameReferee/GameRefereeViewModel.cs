@@ -8,6 +8,8 @@
 
         public int TypeId { get; set; }
 
+        public string TypeName { get; set; }
+
         public string CountryPicture { get; set; }
     }
 }
