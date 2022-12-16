@@ -8,10 +8,6 @@
 
         public PlayerModel Player { get; set; }
 
-        public int Minute { get; set; }
-
-        public bool FirstHalf { get; set; }
-
-        public string OutIcon { get; set; }
+        public string OutIcon => @"~/images/FootballGameIcons/PlayerOut.png";
     }
 }
