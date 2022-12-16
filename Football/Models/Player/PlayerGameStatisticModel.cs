@@ -1,12 +1,18 @@
 ﻿namespace Sportiada.Services.Football.Models.Player
 {
     using Models.Substitute;
+    using Models.Card;
+    using Models.Goal;
+    using Models.GoalAssistance;
+    using System.Collections.Generic;
 
     public class PlayerGameStatisticModel
     {
         public int GameId { get; set; }
 
         public string SeasonName { get; set; }
+
+        public string TournamentName { get; set; }
 
         public int PlayerId { get; set; }
 
@@ -20,24 +26,28 @@
 
         public SubstituteInModel SubstituteIn { get; set; }
 
-        public SubstituteOutModel substituteOut { get; set; }
+        public SubstituteOutModel SubstituteOut { get; set; }
 
         public bool Sideline { get; set; }
 
-        public int YellowCards { get; set; }
+        public CardPlayerStatisticModel YellowCard { get; set; }
 
-        public int RedCard { get; set; }
+        public CardPlayerStatisticModel SecondYellowCard { get; set; }
 
-        public int ScoredGoals { get; set; }
+        public CardPlayerStatisticModel RedCard { get; set; }
 
-        public int OwnGoals { get; set; }
+        public IEnumerable<GoalPlayerStatisticModel> ScoredGoals { get; set; }
 
-        public int GoalAssistances { get; set; }
+        public IEnumerable<GoalPlayerStatisticModel> OwnGoals { get; set; }
 
-        public int AllowedGaols { get; set; }
+        public IEnumerable<GoalAssistancePlayerStatisticModel> GoalAssistances { get; set; }
 
-        public int ScoredPenalties { get; set; }
+        public IEnumerable<GoalPlayerStatisticModel> AllowedGoals { get; set; }
 
-        public int SavedPenalties => 0;
+        public IEnumerable<GoalPlayerStatisticModel> ScoredPenalties { get; set; }
+
+        public IEnumerable<GoalPlayerStatisticModel> MissedPenalties { get; set; }
+
+        public IEnumerable<GoalPlayerStatisticModel> SavedPenalties { get; set; }
     }
 }
