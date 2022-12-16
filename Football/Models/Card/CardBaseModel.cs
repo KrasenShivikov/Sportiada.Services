@@ -9,5 +9,7 @@
 
         public int PlayerId { get; set; }
 
+        public string TypeName { get; set; }
+
     }
 }
