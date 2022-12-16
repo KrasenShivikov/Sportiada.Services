@@ -1,6 +1,6 @@
 ﻿namespace Sportiada.Services.AlpineSki.Implementations
 {
-    using AutoMapper;
+    using Admin.Models;
     using Data;
     using Interfaces;
     using Models.Result;
@@ -14,14 +14,13 @@
     public class ResultAlpineSkiService : IResultAlpineSkiService
     {
         private readonly SportiadaDbContext db;
-        private readonly IMapper mapper;
+  
 
         public const string Stage = "ОБЩО";
 
-        public ResultAlpineSkiService(SportiadaDbContext db, IMapper mapper)
+        public ResultAlpineSkiService(SportiadaDbContext db)
         {
             this.db = db;
-            this.mapper = mapper;
         }
 
         public IEnumerable<ResultCompetitionAlpineSkiModel> AllBySkierByPlaceByDiscipline(int skierId, int place, string disciplineName)
@@ -49,10 +48,10 @@
                    {
                        Name = r.Skier.Name,
                        Id = r.Skier.Id,
-                       Country = new CountryModel
+                       Country = new CountryAdminModel
                        {
                            Name = r.Skier.Country.Name,
-                           PicturePath = r.Skier.Country.LargePicturePath,
+                           PicturePath = r.Skier.Country.PicturePath,
                            ShortName = r.Skier.Country.ShortName
                        },
                        PicturePath = r.Skier.LargePicturePath
@@ -85,10 +84,10 @@
                    {
                        Name = r.Skier.Name,
                        Id = r.Skier.Id,
-                       Country = new CountryModel
+                       Country = new CountryAdminModel
                        {
                            Name = r.Skier.Country.Name,
-                           PicturePath = r.Skier.Country.LargePicturePath,
+                           PicturePath = r.Skier.Country.PicturePath,
                            ShortName = r.Skier.Country.ShortName
                        },
                        PicturePath = r.Skier.LargePicturePath

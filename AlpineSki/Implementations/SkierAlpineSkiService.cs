@@ -1,5 +1,6 @@
 ﻿namespace Sportiada.Services.AlpineSki.Implementations
 {
+    using Admin.Models;
     using Data;
     using System.Linq;
     using Interfaces;
@@ -29,10 +30,10 @@
                       Club = s.Club,
                       Gender = s.Gender,
                       PicturePath = s.LargePicturePath,
-                      Country = new CountryModel
+                      Country = new CountryAdminModel
                       {
                           Name = s.Country.Name,
-                          PicturePath = s.Country.LargePicturePath
+                          PicturePath = s.Country.PicturePath
                       },
                       Results = s.ResultsAlpineSki
                              .Where(r => r.Stage == ResultAlpineSkiService.Stage|| r.CompetitionsAlpineSki.Discipline.Id == 1 || r.CompetitionsAlpineSki.Discipline.Id == 2)
@@ -67,10 +68,10 @@
                       Club = s.Club,
                       Gender = s.Gender,
                       PicturePath = s.LargePicturePath,
-                      Country = new CountryModel
+                      Country = new CountryAdminModel
                       {
                           Name = s.Country.Name,
-                          PicturePath = s.Country.LargePicturePath
+                          PicturePath = s.Country.PicturePath
                       },
                       Results = s.ResultsAlpineSki
                              .Where(r => r.CompetitionsAlpineSki.TournamentId == tournamentId 

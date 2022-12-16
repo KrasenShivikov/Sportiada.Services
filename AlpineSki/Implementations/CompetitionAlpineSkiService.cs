@@ -1,6 +1,5 @@
 ﻿namespace Sportiada.Services.AlpineSki.Implementations
 {
-    using AutoMapper.QueryableExtensions;
     using Interfaces;
     using System.Collections.Generic;
     using System.Linq;
@@ -9,8 +8,9 @@
     using Models.Intermediate;
     using Models.Result;
     using Models.Skier;
+    using Admin.Models;
     using Services.Models;
-
+    
     public class CompetitionAlpineSkiService : ICompetitionAlpineSkiService
     {
         private readonly SportiadaDbContext db;
@@ -23,8 +23,16 @@
         public IEnumerable<CompetitionAlpineSkiModel> All()
          => this.db
               .CompetitionsAlpineSki
-              .ProjectTo<CompetitionAlpineSkiModel>()
-              .ToList();
+              .Select(c => new CompetitionAlpineSkiModel
+              {
+                  CompetitionType = c.CompetitionType,
+                  DateTime = c.DateTime,
+                  Discipline = c.Discipline,
+                  Id = c.Id,
+                  PlaceAlpineSki = c.PlaceAlpineSki,
+                  Season = c.Season,
+                  Tournament = c.Tournament
+              }).ToList();
 
         public CompetitionAlpineSkiWithResultsModel ById(int id, string stage)
          => this.db
@@ -56,11 +64,11 @@
                       {
                           Id = r.Skier.Id,
                           Name = r.Skier.Name,
-                          Country = new CountryModel
+                          Country = new CountryAdminModel
                           {
                               Name = r.Skier.Country.Name,
                               ShortName = r.Skier.Country.ShortName,
-                              PicturePath = r.Skier.Country.LargePicturePath,
+                              PicturePath = r.Skier.Country.PicturePath,
                           },
                           PicturePath = r.Skier.LargePicturePath
                       },
@@ -74,8 +82,15 @@
                       StartOrder = r.StartOrder,
                       Intermediates = r.IntermediatesAlpineSki
                                        .AsQueryable()
-                                       .ProjectTo<IntermediateAlpineSkiModel>()
-                      .ToList()
+                                       .Select(i => new IntermediateAlpineSkiModel
+                                       {
+                                           Name = i.Name,
+                                           Place = i.Place,
+                                           Difference = i.Difference,
+                                           ResultAlpineSki = i.ResultAlpineSki,
+                                           Time = i.Time,
+                                           Speed = i.Speed
+                                       }).ToList()
                   })
                   .ToList()
               })
