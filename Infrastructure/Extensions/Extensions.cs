@@ -1,4 +1,4 @@
-﻿namespace Sportiada.Web.Infrastructure.Extensions
+﻿namespace Sportiada.Services.Infrastructure.Extensions
 {
     public static class Extensions
     {
