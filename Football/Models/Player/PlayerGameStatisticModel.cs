@@ -30,6 +30,8 @@
 
         public bool Sideline { get; set; }
 
+        public IEnumerable<string> SidelineReasons { get; set; }
+
         public CardPlayerStatisticModel YellowCard { get; set; }
 
         public CardPlayerStatisticModel SecondYellowCard { get; set; }
