@@ -52,6 +52,7 @@
                     InLineUp = IsInLineUp(g, player.Id, TeamId),
                     IsReserve = IsInReserves(g, player.Id, TeamId),
                     Sideline = IsInSideline(g, player.Id, TeamId),
+                    SidelineReasons = GetSidelineReson(g, player.Id, TeamId),
                     SubstituteIn = GetSubstitutesIn(g, player.Id, TeamId),
                     SubstituteOut = GetSubstitutesOut(g, player.Id, TeamId),
                     ScoredGoals = GetScoredGoals(g, player.Id, TeamId),
@@ -67,6 +68,19 @@
                 });
 
             return result;
+        }
+
+        private IEnumerable<string> GetSidelineReson(GameWithStatisticModel game, int playerId, int teamId)
+        {
+            var reasons = game
+                .TeamsStatistic
+                .Where(s => s.Squad.Team.Id == teamId)
+                .FirstOrDefault()
+                .Sidelines
+                .Where(s => s.Player.Id == playerId)
+                .Select(s => s.Reason.Picture);
+
+            return reasons;
         }
 
         private bool IsInLineUp(GameWithStatisticModel game, int playerId, int teamId)
@@ -90,11 +104,16 @@
 
         private bool IsInSideline(GameWithStatisticModel game, int playerId, int teamId)
         {
-            var sidelines = game.TeamsStatistic.Where(s => s.Squad.Team.Id == teamId).FirstOrDefault().Sidelines.ToList();
+            bool inSidelines = false;
+            var lineUps = game.TeamsStatistic.Where(s => s.Squad.Team.Id == teamId).FirstOrDefault().LineUps.ToList();
+            var reserves = game.TeamsStatistic.Where(s => s.Squad.Team.Id == teamId).FirstOrDefault().Reserves.ToList();
 
-            bool inReserves = sidelines.Exists(r => r.Player.Id == playerId);
+            if (!lineUps.Exists(l => l.Player.Id == playerId) && !reserves.Exists(r => r.Player.Id == playerId))
+            {
+                inSidelines = true;
+            }
 
-            return inReserves;
+            return inSidelines;
         }
 
         private IEnumerable<GoalPlayerStatisticModel> GetGoals(GameWithStatisticModel game, int playerId, int teamId, string goalType)
