@@ -9,7 +9,11 @@
 
         public string Round { get; set; }
 
+        public string Date { get; set; }
+
         public string CoachName { get; set; }
+
+        public string CoachPosition { get; set; }
 
         public bool IsHost { get; set; }
 
