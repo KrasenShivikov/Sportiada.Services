@@ -7,6 +7,20 @@
     {
         public string PlayerName { get; set; }
 
-        public IDictionary<string, int> CardsByTournament { get; set; }
+        public IDictionary<string, int> CardsByTournament { get; set; } = new Dictionary<string, int>();
+
+        public int Count => GetCardsCount();
+
+        private int GetCardsCount()
+        {
+            int count = 0;
+
+            foreach (var g in CardsByTournament)
+            {
+                count += g.Value;
+            }
+
+            return count;
+        }
     }
 }
