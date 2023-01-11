@@ -11,6 +11,8 @@
 
         IEnumerable<GameWithStatisticModel> GamesBySquadBySeason(int squadId, int seasonId);
 
+        IEnumerable<GameWithStatisticModel> GamesByTournamentBySeason(int tournamentId, int seasonId);
+
         IEnumerable<GameModel> ByTournament(int page, int pageSize, int tournamentId);
 
         int CountByTournament(int tournamentId);
